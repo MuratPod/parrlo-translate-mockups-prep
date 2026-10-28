@@ -661,7 +661,7 @@ const L=q.get('lang');setLang(L==='es'||L==='en'?L:'ru');setAnn(q.get('ann')!=='
 var DT={dev:q.get('dev')==='se'?'se':'pro',size:{xl:'dx',ax5:'da',x:'dx',a:'da'}[q.get('size')]||'dn',full:q.get('full')==='1'};
 function dtScroller(s){return s.querySelector('.shb')||s.querySelector('.msc')||s.querySelector('.obody')||s.querySelector('.body')}
 function dtFit(s){const sc=dtScroller(s);if(!sc)return;
- const cm=s.dataset.consent;if(cm){const fg=s.closest('figure'),cf=DT.cfm[s.dataset.cg],na=(cm==='a')?!cf:cf;fg.classList.toggle('na',na);if(na)return}
+ const cm=s.dataset.consent;if(cm){const fg=s.closest('figure'),cf=DT.cfm[s.dataset.cg],na=(cf===undefined)?false:((cm==='a')?!cf:cf);fg.classList.toggle('na',na);if(na)return}
  if(DT.full){for(let i=0;i<3;i++){const d=sc.scrollHeight-sc.clientHeight;if(d>1)s.style.setProperty('--H',(s.getBoundingClientRect().height+d)+'px')}}
  sc.scrollTop=(!DT.full&&(s.querySelector('.scin.end')||s.dataset.consent==='c'))?sc.scrollHeight:0;
  if(s.dataset.scrollto&&!DT.full){const pp=sc.querySelectorAll('p.op')[+s.dataset.scrollto-1];if(pp)sc.scrollTop=Math.max(0,pp.getBoundingClientRect().top-sc.getBoundingClientRect().top+sc.scrollTop-28)}
