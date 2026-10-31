@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Parrlo — клавиатура · макеты</title>
+<style>
+@font-face{font-family:Inter;src:url(fonts/Inter-Variable.woff2) format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:Nunito;src:url(fonts/Nunito-Variable.woff2) format("woff2");font-weight:200 1000;font-display:swap}
+:root{
+  --bg:#12161C; --surface:#1C2026; --ink:#0E1116; --green:#2BC48A; --brand:#00A86B; --deep:#00875C;
+  --beak:#FFC247; --text:#E8ECF1; --text2:#9AA4B2; --card:#242B34; --glass:#2E3237;
+  --warn:#FFC247; --warnBg:#3C372B; --info:#6AA6F5; --successBg:#1E3734;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#0A0C10;color:var(--text);font-family:Inter,system-ui,sans-serif}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+/* ---------- page shell ---------- */
+.page{display:grid;grid-template-columns:300px 1fr 300px;gap:24px;min-height:100vh;padding:20px}
+.side h1{font-family:Nunito;font-weight:900;font-size:28px;line-height:1.1;margin-bottom:4px}
+.side h1 .rr{color:var(--brand)}
+.side .sub{color:var(--text2);font-size:14px;line-height:1.4;margin-bottom:12px}
+.proto{display:inline-block;background:var(--warnBg);color:var(--warn);font-size:13px;font-weight:600;padding:6px 10px;border-radius:10px;margin-bottom:16px;line-height:1.35}
+.nav h2{font-family:Nunito;font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin:16px 0 6px}
+.nav h2.later{color:var(--warn)}
+.nav button{display:block;width:100%;text-align:left;padding:8px 10px;border-radius:10px;font-size:14px;line-height:1.3;color:var(--text)}
+.nav button small{display:block;color:var(--text2);font-size:12px}
+.nav button:hover{background:#1C2026}
+.nav button.on{background:var(--successBg);color:var(--green)}
+.stage{display:flex;align-items:flex-start;justify-content:center;padding-top:8px}
+.notes{font-size:14px;line-height:1.5;color:var(--text2)}
+.notes h3{font-family:Nunito;font-weight:900;font-size:20px;color:var(--text);margin-bottom:8px;line-height:1.2}
+.notes p{margin-bottom:10px}
+.notes b{color:var(--text)}
+.notes .tag{display:inline-block;font-size:12px;font-weight:700;padding:3px 8px;border-radius:8px;background:var(--warnBg);color:var(--warn);margin-bottom:8px}
+.ctrl{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px}
+.ctrl button{border:1px solid #2E3540;border-radius:10px;padding:6px 10px;font-size:13px}
+.bezel{padding:12px;border-radius:64px;background:#2A2F37;box-shadow:0 0 0 2px #3A404A inset,0 30px 80px rgba(0,0,0,.5);transform-origin:top center}
+.bezel.se{border-radius:54px;padding:64px 14px}
+.bezel.android{border-radius:44px;padding:10px}
+/* ---------- device screen ---------- */
+.screen{position:relative;overflow:hidden;background:#0B0E12;display:flex;flex-direction:column;border-radius:52px}
+.se .screen{border-radius:0}
+.android .screen{border-radius:36px}
+body.shot{background:#0B0E12}
+body.shot .page{display:block;padding:0}
+body.shot .side,body.shot .notes{display:none}
+body.shot .stage{padding:0;display:block}
+body.shot .bezel{padding:0;border-radius:0;box-shadow:none;background:none;transform:none!important}
+body.shot .screen{border-radius:0}
+/* status bar */
+.status{flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 30px 0 34px;font-weight:600;font-size:17px;position:relative}
+.status .island{position:absolute;left:50%;top:11px;width:124px;height:36px;margin-left:-62px;background:#000;border-radius:20px}
+.status .icons{display:flex;gap:6px;align-items:center}
+.status .back{position:absolute;left:18px;top:16px;font-size:14px;font-weight:600;color:var(--info);display:flex;align-items:center;gap:2px;padding:3px 8px;border-radius:10px;box-shadow:0 0 0 2px var(--info)}
+.se .status{font-size:12px;padding:0 8px;height:20px}
+.android .status{font-size:14px;padding:0 22px}
+.android .status .cam{position:absolute;left:50%;top:10px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#000}
+/* messenger */
+.mhead{flex:none;height:52px;display:flex;align-items:center;gap:10px;padding:0 12px;border-bottom:1px solid #1A1F27;background:#0F1217}
+.mhead .chev{font-size:28px;color:var(--info);width:20px;line-height:1}
+.ava{width:36px;height:36px;border-radius:50%;background:#3A4250;display:grid;place-items:center;font-weight:700;font-size:15px}
+.mhead .nm{font-weight:600;font-size:16px}
+.mhead .st{font-size:12px;color:var(--text2)}
+.chat{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding:10px 12px;background:#0B0E12}
+.b{max-width:78%;padding:8px 12px;border-radius:18px;font-size:16px;line-height:1.35;position:relative}
+.b .t{display:block;font-size:11px;color:rgba(232,236,241,.6);text-align:right;margin-top:2px}
+.b.in{align-self:flex-start;background:#232A33;border-bottom-left-radius:6px}
+.b.out{align-self:flex-end;background:#2B5A8A;border-bottom-right-radius:6px}
+.b.sel{box-shadow:0 0 0 2px var(--info)}
+.ctxmenu{align-self:flex-start;background:#2A313B;border-radius:14px;overflow:hidden;font-size:15px;width:210px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.ctxmenu div{padding:10px 14px;border-bottom:1px solid #353D48;display:flex;justify-content:space-between}
+.ctxmenu div:last-child{border:0}
+.ctxmenu .hl{background:#36404C}
+.toast{align-self:center;background:#2A313B;border-radius:12px;font-size:13px;padding:6px 12px;color:var(--text)}
+.inbar{flex:none;display:flex;align-items:flex-end;gap:8px;padding:8px 10px;background:#0F1217;border-top:1px solid #1A1F27}
+.inbar .plus{width:34px;height:36px;display:grid;place-items:center;color:var(--text2)}
+.field{flex:1;min-height:36px;max-height:82px;overflow:hidden;border-radius:18px;background:#1A1F27;border:1px solid #2A313B;padding:6px 12px;font-size:16px;line-height:22px;word-break:break-word}
+.field .fx{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;max-height:66px}
+.field .ph{color:#6B7480}
+.caret{display:inline-block;width:2px;height:19px;background:var(--info);vertical-align:-4px;margin-left:1px;animation:blink 1s steps(1) infinite}
+body.shot .caret{animation:none}
+@keyframes blink{50%{opacity:0}}
+.send{width:36px;height:36px;border-radius:50%;background:#2B5A8A;display:grid;place-items:center;flex:none}
+.send.off{background:#232A33;color:#6B7480}
+/* ---------- keyboard ---------- */
+.kb{flex:none;background:var(--bg);border-top:1px solid #262C35;display:flex;flex-direction:column;position:relative}
+.strip{flex:none;display:flex;align-items:center;gap:5px;padding:0 5px}
+.parrot{flex:none;display:block;border-radius:50%}
+.seg{display:flex;background:var(--ink);border:1px solid #2A313B;border-radius:12px;padding:2px;flex:none}
+.seg button{height:36px;padding:0 7px;border-radius:10px;font-size:15px;font-weight:600;color:var(--text2);white-space:nowrap}
+.seg button.on{background:var(--surface);color:var(--text);box-shadow:0 0 0 1px #3A424D inset}
+.seg .lbl{align-self:center;font-size:13px;color:var(--text2);padding:0 1px 0 4px}
+.seg.lang button.on{color:var(--green)}
+.primary{background:var(--green);color:var(--ink);font-weight:700;border-radius:12px;height:40px;padding:0 11px;font-size:16px;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.primary:active{filter:brightness(.92)}
+.secondary{background:var(--surface);color:var(--text);font-weight:700;border-radius:12px;height:40px;padding:0 12px;font-size:16px;border:1px solid #39414C;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.strip .primary{margin-left:auto}
+.iconbtn{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--text2);flex:none}
+.rows{flex:1;display:flex;flex-direction:column;position:relative}
+.row{display:flex;justify-content:center}
+.key{flex:none;background:var(--surface);border-radius:9px;display:grid;place-items:center;font-weight:500;color:var(--text);box-shadow:0 1px 0 #05070A,inset 0 1px 0 rgba(255,255,255,.05);user-select:none;-webkit-user-select:none;position:relative}
+.key:active,.key.press{background:#2E3540}
+.key.fn{background:#2A3038;color:var(--text);font-size:16px;font-weight:600}
+.key.fn.on{background:var(--text);color:var(--ink)}
+.key.space{font-size:16px;font-weight:500;color:var(--text2)}
+.key.lng{font-size:15px;font-weight:700;color:var(--green)}
+.key.mic.later{box-shadow:0 0 0 2px var(--warn) inset}
+.key .pop{position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:#3A424D;border-radius:10px;padding:4px 12px;font-size:32px}
+/* system row (Face ID iPhones) */
+.sysrow{flex:none;background:var(--bg);display:flex;justify-content:space-between;align-items:flex-start;padding:6px 26px 0;position:relative;color:#6B7480}
+.sysrow .hint{position:absolute;left:50%;top:10px;transform:translateX(-50%);font-size:10px;color:#4D5562;letter-spacing:.04em;text-transform:uppercase}
+.homeind{position:absolute;left:50%;bottom:8px;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:#E8ECF1}
+.navbar{flex:none;background:var(--bg);position:relative}
+.navbar .homeind{width:108px;height:4px;margin-left:-54px;bottom:10px;background:#9AA4B2}
+/* panels that replace rows */
+.panel{position:absolute;inset:0;display:flex;flex-direction:column;padding:8px 10px 12px;gap:8px;background:var(--bg)}
+.hintb{position:relative;align-self:flex-start;background:var(--successBg);color:var(--green);font-size:14px;font-weight:600;line-height:1.3;padding:7px 11px;border-radius:12px;max-width:100%}
+.hintb:before{content:"";position:absolute;left:14px;top:-6px;border:6px solid transparent;border-top:0;border-bottom-color:var(--successBg)}
+.tcard{flex:1;min-height:0;background:var(--card);border-radius:16px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;border:1px solid #2F3742}
+.tcard .lab{font-size:12px;font-weight:600;color:var(--text2);display:flex;justify-content:space-between;gap:8px}
+.tcard .tx{font-size:20px;line-height:28px;color:var(--text);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#4A5360 transparent;padding-right:4px}
+.tcard .tx.clamp{max-height:84px}
+.tcard .orig{font-size:13px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tcard .more{font-size:12px;color:var(--text2)}
+.pbtns{display:flex;gap:8px;flex:none}
+.pbtns button{flex:1;height:52px;font-size:18px;border-radius:14px}
+.plaque{flex:1;display:flex;align-items:center;gap:8px;background:var(--warnBg);color:var(--warn);border-radius:12px;padding:5px 6px 5px 10px;font-size:13px;line-height:1.3;font-weight:600;height:44px;text-align:left}
+.plaque .go{flex:none;background:var(--warn);color:var(--ink);font-weight:700;border-radius:9px;padding:0 9px;height:32px;display:grid;place-items:center;font-size:13px}
+.listen{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:var(--green);flex:1}
+.wave{display:flex;gap:3px;align-items:center;height:24px}
+.wave i{display:block;width:3px;border-radius:2px;background:var(--green)}
+/* ---------- app screens ---------- */
+.app{flex:1;min-height:0;background:var(--bg);display:flex;flex-direction:column;padding:8px 22px 24px;overflow:hidden}
+.wm{font-family:Nunito;font-weight:900;font-size:22px;letter-spacing:-.01em}
+.wm .rr{color:var(--brand)}
+.app h2{font-family:Nunito;font-weight:900;font-size:26px;line-height:1.15;margin:14px 0 8px}
+.app .lead{font-size:16px;line-height:1.5;color:var(--text2)}
+.steps{list-style:none;margin:18px 0 14px;display:flex;flex-direction:column;gap:10px}
+.steps li{display:flex;gap:12px;align-items:center;font-size:17px;line-height:1.35}
+.steps .n{flex:none;width:32px;height:32px;border-radius:50%;background:var(--successBg);color:var(--green);display:grid;place-items:center;font-weight:800;font-family:Nunito;font-size:17px}
+.setmock{background:#1C2026;border-radius:14px;overflow:hidden;font-size:15px;border:1px solid #2A313B}
+.setmock .r{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #2A313B}
+.setmock .r:last-child{border:0}
+.setmock .path{font-size:12px;color:var(--text2);padding:8px 14px 4px}
+.tog{width:46px;height:28px;border-radius:14px;background:#3A424D;position:relative;flex:none}
+.tog:after{content:"";position:absolute;top:2px;left:2px;width:24px;height:24px;border-radius:50%;background:#fff}
+.tog.on{background:var(--green)}
+.tog.on:after{left:20px}
+.app .bottom{margin-top:auto;display:flex;flex-direction:column;gap:10px}
+.app .bottom .primary,.app .bottom .secondary{height:54px;font-size:18px;border-radius:16px;width:100%}
+.link{color:var(--green);font-weight:600;font-size:16px;text-align:center;padding:6px}
+.why{list-style:none;display:flex;flex-direction:column;gap:12px;margin-top:16px}
+.why li{display:flex;gap:12px;font-size:16px;line-height:1.45}
+.why .ic{flex:none;width:34px;height:34px;border-radius:10px;background:var(--surface);display:grid;place-items:center;color:var(--green)}
+.dict{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center}
+.bigmic{width:96px;height:96px;border-radius:50%;background:var(--green);color:var(--ink);display:grid;place-items:center;box-shadow:0 0 0 10px rgba(43,196,138,.16)}
+.trans{background:var(--card);border-radius:16px;padding:12px 14px;font-size:20px;line-height:1.4;min-height:64px;width:100%;text-align:left}
+.trans .lab{font-size:12px;color:var(--text2);font-weight:600;display:block;margin-bottom:2px}
+.backhint{display:flex;gap:10px;align-items:center;background:#273343;color:var(--info);border-radius:14px;padding:10px 12px;font-size:15px;font-weight:600;line-height:1.35;text-align:left;width:100%}
+.backhint .arr{flex:none;font-size:22px;font-weight:800;width:28px;height:28px;display:grid;place-items:center;border:2px solid var(--info);border-radius:8px}
+</style>
+</head>
+<body>
+<div class="page">
+  <aside class="side">
+    <h1>Pa<span class="rr">rr</span>lo · клавиатура</h1>
+    <p class="sub">Макеты клавиатуры iOS/Android: пишете по-русски — в чат уходит перевод на ES или EN.</p>
+    <p class="proto">Прототип: переводы заранее заготовлены</p>
+    <nav class="nav" id="nav"></nav>
+  </aside>
+  <main class="stage"><div class="bezel" id="bezel"><div class="screen" id="screen"></div></div></main>
+  <aside class="notes" id="notes"></aside>
+</div>
+<script>
+'use strict';
+/* ---------------- данные ---------------- */
+const PARROT = 'parrlo-a.svg';
+const ICON = {
+  globe:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18"/></svg>',
+  mic:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+  micBig:'<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+  back:'<svg width="26" height="22" viewBox="0 0 28 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M9 4h15a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H9l-7-8z"/><path d="M13 9l6 6M19 9l-6 6"/></svg>',
+  shift:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l9 9h-5v8H8v-8H3z"/></svg>',
+  shiftOn:'<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l9 9h-5v8H8v-8H3z"/></svg>',
+  ret:'<svg width="24" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5M9 11l-4 4 4 4"/></svg>',
+  send:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>',
+  plus:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  close:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  clip:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 10h6M9 14h4"/></svg>',
+  swap:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h14l-4-4M20 16H6l4 4"/></svg>',
+  globeNet:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18"/></svg>',
+  check:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>',
+  sliders:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>',
+  info:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>',
+  sig:'<svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>',
+  wifi:'<svg width="17" height="12" viewBox="0 0 17 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 4.2a11 11 0 0 1 15 0M3.6 7a7 7 0 0 1 9.8 0"/><circle cx="8.5" cy="10" r="1.3" fill="currentColor" stroke="none"/></svg>',
+  bat:'<svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x=".5" y=".5" width="23" height="12" rx="3.5" stroke="currentColor" opacity=".5"/><rect x="2" y="2" width="18" height="9" rx="2" fill="currentColor"/><rect x="25" y="4.5" width="1.6" height="4" rx=".8" fill="currentColor" opacity=".5"/></svg>'
+};
+const RU = 'Привет! Давай завтра в семь у кафе, если ты не против?';
+const LONG = 'Спасибо, что предупредила! Половина девятого мне подходит. Тогда встретимся у входа в кафе на площади, я займу столик у окна. Если что-то изменится, напиши, пожалуйста, заранее — я буду в дороге.';
+const DICT = 'Буду через десять минут, уже выхожу';
+const INCOMING = 'Oye, al final no puedo a las siete. ¿Te va bien a las ocho y media?';
+const INCOMING_RU = 'Слушай, в семь в итоге не получается. Тебе удобно в половине девятого?';
+const TR = {
+  short:{es:{f:'¡Hola! ¿Nos vemos mañana a las siete en el café, si te viene bien?',p:'Hola. ¿Le parecería bien que nos viéramos mañana a las siete en la cafetería?'},
+         en:{f:'Hey! Want to meet at the café tomorrow at seven, if that works for you?',p:'Hello. Would it suit you to meet at the café tomorrow at seven?'}},
+  long:{es:{f:'¡Gracias por avisarme! Las ocho y media me viene bien. Entonces nos vemos en la entrada del café de la plaza; cogeré una mesa junto a la ventana. Si cambia algo, escríbeme antes, porfa, que estaré de camino.',
+            p:'Gracias por avisarme. Las ocho y media me viene bien. Entonces nos vemos en la entrada de la cafetería de la plaza; reservaré una mesa junto a la ventana. Si hubiera algún cambio, le agradecería que me escribiera con antelación, ya que estaré de camino.'},
+        en:{f:'Thanks for the heads-up! Eight thirty works for me. Let’s meet at the entrance of the café on the square — I’ll grab a table by the window. If anything changes, please text me ahead of time, I’ll be on the road.',
+            p:'Thank you for letting me know. Eight thirty suits me well. Let us meet at the entrance of the café on the square; I will reserve a table by the window. Should anything change, I would appreciate a message in advance, as I will be travelling.'}},
+  dict:{es:{f:'Llego en diez minutos, ya estoy saliendo.',p:'Llegaré en diez minutos; ya estoy saliendo.'},
+        en:{f:'Be there in ten minutes, heading out now.',p:'I will be there in ten minutes; I am leaving now.'}}
+};
+function hintFor(st){
+  if (st.src==='dict') return 'Из диктовки — проверьте текст перед вставкой';
+  if (st.tone==='f') return 'Похоже на дружескую переписку — тон «Друг»';
+  return st.target==='es' ? 'Тон «Вежливо»: обращаюсь на «usted»' : 'Тон «Вежливо»: без сокращений и сленга';
+}
+const LAYOUT = {
+  ru:[['й','ц','у','к','е','н','г','ш','щ','з','х','ъ'],['ф','ы','в','а','п','р','о','л','д','ж','э'],['ч','я','с','м','и','т','ь','б','ю']],
+  es:[['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l','ñ'],['z','x','c','v','b','n','m']],
+  en:[['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m']],
+  num:[['1','2','3','4','5','6','7','8','9','0'],['-','/',':',';','(',')','₽','&','@','"'],['.',',','?','!','’']]
+};
+LAYOUT.ru[2]=['я','ч','с','м','и','т','ь','б','ю'];
+const LNAME = {ru:'RU',es:'ES',en:'EN'};
+const SPACE = {ru:'Пробел',es:'espacio',en:'space',num:'Пробел'};
+const DEV = {
+  ios:{w:393,h:852,status:54,kb:320,strip:52,keyH:54,gapY:10,padT:8,padB:14,gapX:5,padX:4,font:26,sys:48,radius:52},
+  se:{w:375,h:667,status:20,kb:280,strip:46,keyH:48,gapY:9,padT:6,padB:9,gapX:5,padX:3,font:24,sys:0},
+  android:{w:412,h:915,status:32,kb:310,strip:52,keyH:52,gapY:10,padT:6,padB:14,gapX:5,padX:4,font:26,sys:24}
+};
+/* ---------------- экраны ---------------- */
+const S = [
+ {sec:'iOS · MVP-1 (iPhone 17, 393×852)'},
+ {id:'kb-01-ru',t:'1. Раскладка RU',d:'крупные клавиши, полоса Parrlo',
+  st:{text:'Привет! Давай завтра в семь у ка'},
+  n:'<p><b>Клавиатура 320 pt</b>: полоса 52 pt + 4 ряда клавиш по 54 pt. Буквы 26 px, заглавные подписи.</p><p>Полоса: Парло слева, «в какой» язык (ES / EN), тон (Друг / Вежливо), основная кнопка «Перевести».</p><p>Под клавиатурой — системный ряд iPhone с Face ID (глобус и диктовка рисует iOS, не мы), условно серым.</p><p>Попробуйте: печатайте, затем «Перевести».</p>'},
+ {id:'kb-02-es',t:'2a. Раскладка ES',d:'клавиша RU → ES → EN',
+  st:{layout:'es',text:'Vale, nos vemos mañana'},
+  n:'<p>Клавиша с кодом языка в нижнем ряду переключает раскладку RU → ES → EN. Можно писать и сразу на испанском — «Перевести» тогда не обязательна.</p><p>Буква ñ — отдельная клавиша во втором ряду.</p>'},
+ {id:'kb-03-en',t:'2b. Раскладка EN',d:'QWERTY',
+  st:{layout:'en',text:'See you tomorrow',shift:false},
+  n:'<p>Английская раскладка. Ряд 2 — 9 клавиш, по центру, ширина клавиш как в ES.</p>'},
+ {id:'kb-04-preview',t:'3. Предпросмотр перевода',d:'«Вставить» / «Изменить»',
+  st:{text:RU,panel:'preview',src:'short'},
+  n:'<p>Предпросмотр <b>заменяет ряды клавиш</b> — выше окна клавиатуры ничего не рисуется, высота та же 320 pt.</p><p>Парло подсказывает контекст одной фразой. Язык и тон можно поменять прямо здесь — перевод обновится.</p><p>«Вставить» заменяет текст в поле на перевод. «Изменить» возвращает клавиши, исходный текст остаётся.</p>'},
+ {id:'kb-05-preview-long',t:'3b. Длинный перевод',d:'2–3 строки с прокруткой',
+  st:{text:LONG,panel:'preview',src:'long'},
+  n:'<p>Длинный перевод: в карточке видно 3 строки, остальное — прокруткой внутри карточки. Кнопки остаются на месте.</p>'},
+ {id:'kb-06-incoming-copied',t:'4a. Входящее: скопировали',d:'кнопка «Перевести скопированное»',
+  st:{text:'',clip:true,ctx:true},
+  n:'<p>Сценарий: долгое нажатие на сообщение → «Скопировать» → в полосе клавиатуры появляется кнопка <b>«Перевести скопированное»</b>.</p><p>Крестик убирает кнопку; полоса возвращается, как только вы начинаете печатать.</p>'},
+ {id:'kb-07-incoming-panel',t:'4b. Входящее: перевод',d:'перевод в панели, в поле не вставляется',
+  st:{text:'',panel:'incoming'},
+  n:'<p>Перевод скопированного на русский показывается в панели клавиатуры. <b>В поле ввода он не вставляется.</b></p><p>«Ответить» возвращает клавиши — можно сразу писать ответ.</p>'},
+ {id:'kb-08-no-full-access',t:'5. Без полного доступа',d:'плашка в полосе → Настройки',
+  st:{text:'Привет',nofa:true},
+  n:'<p>Пока полный доступ выключен, полоса заменяется плашкой. Клавиши печатают как обычно.</p><p>Кнопка «Настройки» открывает только Настройки iOS (не приложение Parrlo).</p>'},
+ {sec:'Приложение Parrlo (iOS)'},
+ {id:'kb-09-app-enable',t:'6a. Включить клавиатуру',d:'шаги в Настройках',
+  st:{view:'enable'},
+  n:'<p>Экран в приложении. Кнопка «Открыть Настройки» ведёт сразу на страницу Parrlo в Настройках iOS, там «Клавиатуры».</p><p>Справа — мини-схема того, что человек увидит.</p>'},
+ {id:'kb-10-app-full-access',t:'6b. Зачем полный доступ',d:'нейтральное объяснение',
+  st:{view:'fullaccess'},
+  n:'<p>Объясняем по делу: перевод идёт через интернет, без полного доступа клавиатура не выходит в сеть. Без юридических обещаний.</p>'},
+ {sec:'iPhone SE (375×667)'},
+ {id:'kb-11-se-ru',t:'7. iPhone SE · RU',d:'клавиатура 280 pt',
+  dev:'se', st:{text:'Привет! Давай завтра в семь у ка'},
+  n:'<p>Клавиатура 280 pt: полоса 46 pt + ряды по 48 pt, буквы 24 px. Системного ряда нет — свой глобус нужен (needsInputModeSwitchKey = true).</p>'},
+ {sec:'Android (412×915 dp)'},
+ {id:'kb-12-android-ru',t:'8. Android · RU',d:'микрофон в клавиатуре',
+  dev:'android', st:{text:'Привет! Давай завтра в семь у ка',mic:true},
+  n:'<p>Клавиатура ~310 dp + отступ навигации 24 dp. На Android микрофон прямо в клавиатуре: запись без перехода в приложение.</p><p>Нажмите микрофон — увидите «Слушаю», затем предпросмотр.</p>'},
+ {id:'kb-13-android-listen',t:'8b. Android · запись',d:'слушаем в клавиатуре',
+  dev:'android', st:{text:'',mic:true,listening:true},
+  n:'<p>Во время записи полоса показывает «Слушаю…» и кнопку «Готово». Ряды клавиш остаются.</p>'},
+ {sec:'На потом — на проверке правил App Store', later:true},
+ {id:'kb-14-later-mic-key',t:'L1. iOS: кнопка микрофона',d:'переход в Parrlo',
+  later:true, st:{text:'',mic:true,micToast:true},
+  n:'<span class="tag">На потом</span><p>Правило App Store 4.4.1: клавиатура не может открывать другие приложения, кроме Настроек. Поэтому в MVP-1 микрофона на iOS нет. Сценарий сохранён на проверку.</p>'},
+ {id:'kb-15-later-mic-app',t:'L2. iOS: диктовка в Parrlo',d:'«Вернитесь стрелкой ‹ вверху слева»',
+  later:true, st:{view:'dictation'},
+  n:'<span class="tag">На потом</span><p>Экран записи в приложении. Автовозврата в мессенджер нет — подсказываем системную стрелку «‹ Мессенджер» вверху слева.</p>'},
+ {id:'kb-16-later-mic-return',t:'L3. iOS: возврат',d:'текст в предпросмотре',
+  later:true, st:{text:'',panel:'preview',src:'dict',mic:true},
+  n:'<span class="tag">На потом</span><p>После возврата продиктованный текст сразу в предпросмотре клавиатуры: перевод, «Вставить» / «Изменить».</p>'}
+];
+const BASE = {view:'chat',layout:'ru',shift:false,target:'es',tone:'f',panel:null,src:null,clip:false,ctx:false,nofa:false,mic:false,micToast:false,listening:false,text:'',sent:[],press:null};
+let cur, st, dev;
+const $ = (q)=>document.querySelector(q);
+const esc = (s)=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+/* ---------------- рендер ---------------- */
+function statusBar(){
+  const d=DEV[dev];
+  const back = st.view==='dictation' ? `<button class="back" data-act="goBack">‹ Мессенджер</button>` : '';
+  if (dev==='se') return `<div class="status" style="height:20px"><span>${ICON.sig}</span><span>9:41</span><span class="icons">${ICON.bat}</span></div>`;
+  if (dev==='android') return `<div class="status" style="height:${d.status}px"><span>9:41</span><i class="cam"></i><span class="icons">${ICON.wifi}${ICON.sig}${ICON.bat}</span></div>`;
+  return `<div class="status" style="height:${d.status}px"><span>${st.view==='dictation'?'':'9:41'}</span><i class="island"></i><span class="icons">${ICON.sig}${ICON.wifi}${ICON.bat}</span>${back}</div>`;
+}
+function chat(){
+  let h = `<div class="mhead"><span class="chev">‹</span><div class="ava">L</div><div><div class="nm">Lucía</div><div class="st">в сети</div></div></div><div class="chat">`;
+  h += `<div class="b in">¡Hola! ¿Qué tal el viaje?<span class="t">18:02</span></div>`;
+  h += `<div class="b out">¡Muy bien, gracias! Ya estoy en Valencia.<span class="t">18:04</span></div>`;
+  h += `<div class="b in ${st.ctx?'sel':''}">${INCOMING}<span class="t">18:10</span></div>`;
+  if (st.ctx) h += `<div class="toast">Сообщение скопировано</div>`;
+  for (const m of st.sent) h += `<div class="b out">${esc(m)}<span class="t">18:12</span></div>`;
+  h += `</div>`;
+  const has = st.text.length>0;
+  const cap = (st.panel||st.listening) ? '' : '<i class="caret"></i>';
+  h += `<div class="inbar"><span class="plus">${ICON.plus}</span><div class="field"><span class="fx">${has?esc(st.text).replace(/\n/g,'<br>')+cap:cap+'<span class="ph">Сообщение</span>'}</span></div><button class="send ${has?'':'off'}" data-act="send">${ICON.send}</button></div>`;
+  return h;
+}
+function keyW(n,d){ return (d.w-2*d.padX-(n-1)*d.gapX)/n; }
+function rows(){
+  const d=DEV[dev], L=LAYOUT[st.layout], n=st.layout==='ru'?12:10, u=keyW(n,d);
+  const up = st.layout!=='num';
+  const k=(ch,w)=>`<button class="key" data-k="${ch}" style="width:${w}px;height:${d.keyH}px;font-size:${d.font}px">${up?ch.toUpperCase():ch}</button>`;
+  const row=(inner)=>`<div class="row" style="gap:${d.gapX}px">${inner}</div>`;
+  let h=`<div class="rows" style="padding:${d.padT}px ${d.padX}px ${d.padB}px;gap:${d.gapY}px">`;
+  h+=row(L[0].map(c=>k(c,u)).join(''));
+  h+=row(L[1].map(c=>k(c,u)).join(''));
+  const r3=L[2], side=(d.w-2*d.padX-r3.length*u-(r3.length+1)*d.gapX)/2;
+  const shiftKey = st.layout==='num' ? `<button class="key fn" style="width:${side}px;height:${d.keyH}px">#+=</button>`
+    : `<button class="key fn ${st.shift?'on':''}" data-act="shift" style="width:${side}px;height:${d.keyH}px">${st.shift?ICON.shiftOn:ICON.shift}</button>`;
+  h+=row(shiftKey + r3.map(c=>k(c,u)).join('') + `<button class="key fn" data-act="bksp" style="width:${side}px;height:${d.keyH}px">${ICON.back}</button>`);
+  /* нижний ряд */
+  const showGlobe = dev!=='android';
+  const showMic = st.mic;
+  const fixed=[];
+  fixed.push(`<button class="key fn" data-act="num" style="width:W123px;height:${d.keyH}px">${st.layout==='num'?'АБВ':(dev==='android'?'?123':'123')}</button>`);
+  if (showGlobe) fixed.push(`<button class="key fn" style="width:42px;height:${d.keyH}px" title="Следующая клавиатура (needsInputModeSwitchKey)">${ICON.globe}</button>`);
+  fixed.push(`<button class="key fn lng" data-act="lng" style="width:46px;height:${d.keyH}px">${LNAME[st.lastAlpha||st.layout]||'RU'}</button>`);
+  if (showMic) fixed.push(`<button class="key fn mic ${dev!=='android'?'later':''} ${st.micToast||st.listening?'on':''}" data-act="mic" style="width:44px;height:${d.keyH}px">${ICON.mic}</button>`);
+  let used = (dev==='android'?50:48) + (showGlobe?42:0) + 46 + (showMic?44:0) + 70;
+  const nk = fixed.length + 2;
+  const sp = d.w-2*d.padX-(nk-1)*d.gapX-used;
+  h+=row(fixed.join('').replace('W123',dev==='android'?50:48) + `<button class="key space" data-k=" " style="width:${sp}px;height:${d.keyH}px">${SPACE[st.layout]}</button><button class="key fn" data-k="\n" style="width:70px;height:${d.keyH}px">${ICON.ret}</button>`);
+  h+=`</div>`;
+  return h;
+}
+function trText(){
+  if (!st.src) return {tx:TR.short[st.target][st.tone], orig:st.text};
+  const o = st.src==='long'?LONG:st.src==='dict'?DICT:RU;
+  return {tx:TR[st.src][st.target][st.tone], orig:o};
+}
+function panel(){
+  if (st.panel==='preview'){
+    const t=trText(); const custom = !st.src && st.text && st.text!==RU;
+    const lab = `${st.target.toUpperCase()} · ${st.tone==='f'?'Друг':'Вежливо'}${st.src==='dict'?' · из диктовки':''}`;
+    return `<div class="panel"><div class="hintb">${hintFor(st)}</div>
+      <div class="tcard"><div class="lab"><span>Перевод · ${lab}</span>${st.src==='long'?'<span>прокрутите ↓</span>':''}</div>
+      <div class="tx clamp">${esc(t.tx)}</div>
+      <div class="orig">${custom?'Прототип: показан заготовленный пример':'Ваш текст: '+esc(t.orig)}</div></div>
+      <div class="pbtns"><button class="secondary" data-act="edit">Изменить</button><button class="primary" data-act="insert">Вставить</button></div></div>`;
+  }
+  if (st.panel==='incoming'){
+    return `<div class="panel"><div class="hintb">Испанский, дружеский тон — встречу переносят</div>
+      <div class="tcard"><div class="lab"><span>Скопированное · ES → RU</span><span>в поле не вставляется</span></div>
+      <div class="tx clamp">${INCOMING_RU}</div><div class="orig">${INCOMING}</div></div>
+      <div class="pbtns"><button class="secondary" data-act="closePanel">Закрыть</button><button class="primary" data-act="closePanel">Ответить</button></div></div>`;
+  }
+  return '';
+}
+function strip(){
+  const d=DEV[dev], ps = dev==='se'?30:34;
+  const parrot = `<img class="parrot" src="${PARROT}" width="${ps}" height="${ps}" alt="Parrlo">`;
+  let inner;
+  if (st.nofa){
+    inner = `<button class="plaque" data-act="openSettings"><span>Включите полный доступ — без него клавиатура печатает, но не переводит.</span><span class="go">Настройки</span></button>`;
+  } else if (st.listening){
+    const bars=[8,16,22,12,18,10,20,14,9].map(h=>`<i style="height:${h}px"></i>`).join('');
+    inner = parrot + `<div class="listen"><span class="wave">${bars}</span>Слушаю…</div><button class="primary" data-act="micDone">Готово</button>`;
+  } else if (st.micToast){
+    inner = parrot + `<div class="listen" style="color:var(--text)">Откроем Parrlo для записи…</div><button class="primary" data-act="toDict">Открыть</button>`;
+  } else if (st.clip && !st.text){
+    inner = parrot + `<button class="primary" data-act="trClip" style="margin-left:0;flex:1">${ICON.clip} Перевести скопированное</button><button class="iconbtn" data-act="noClip" aria-label="Убрать">${ICON.close}</button>`;
+  } else {
+    const small = dev==='se';
+    const lang = `<div class="seg lang"><span class="lbl">→</span>${['es','en'].map(l=>`<button class="${st.target===l?'on':''}" data-act="target" data-v="${l}" style="${small?'padding:0 6px;font-size:14px':''}">${l.toUpperCase()}</button>`).join('')}</div>`;
+    const tone = `<div class="seg">${[['f','Друг'],['p','Вежливо']].map(([v,l])=>`<button class="${st.tone===v?'on':''}" data-act="tone" data-v="${v}" style="${small?'padding:0 5px;font-size:14px':''}">${l}</button>`).join('')}</div>`;
+    const act = st.panel ? `<button class="iconbtn" data-act="edit" aria-label="К клавишам" style="margin-left:auto">${ICON.close}</button>`
+                         : `<button class="primary" data-act="translate" style="${small?'padding:0 10px;font-size:15px':''}">Перевести</button>`;
+    inner = parrot + lang + tone + act;
+  }
+  return `<div class="strip" style="height:${d.strip}px">${inner}</div>`;
+}
+function keyboard(){
+  const d=DEV[dev];
+  let h=`<div class="kb" style="height:${d.kb}px">${strip()}${rows()}`;
+  if (st.panel) h=h.replace(/<\/div>$/,'') ;
+  h = `<div class="kb" style="height:${d.kb}px">${strip()}<div style="position:relative;flex:1;display:flex;flex-direction:column">${rows()}${panel()}</div></div>`;
+  if (dev==='ios') h+=`<div class="sysrow" style="height:${d.sys}px"><span>${ICON.globe}</span><span class="hint">системный ряд iOS</span><span>${ICON.mic}</span><i class="homeind"></i></div>`;
+  if (dev==='android') h+=`<div class="navbar" style="height:${d.sys}px"><i class="homeind"></i></div>`;
+  return h;
+}
+function appScreen(){
+  const home = dev==='ios'?'<i class="homeind" style="bottom:8px"></i>':'';
+  if (st.view==='enable') return `<div class="app"><div class="wm">Pa<span class="rr">rr</span>lo</div>
+    <h2>Включите клавиатуру Parrlo</h2><p class="lead">Пишите по-русски в любом мессенджере — в чат уйдёт перевод.</p>
+    <ol class="steps"><li><span class="n">1</span>Нажмите «Открыть Настройки»</li><li><span class="n">2</span>Выберите «Клавиатуры»</li><li><span class="n">3</span>Включите «Parrlo»</li><li><span class="n">4</span>Включите «Полный доступ»</li></ol>
+    <div class="setmock"><div class="path">Настройки → Parrlo → Клавиатуры</div><div class="r"><span>Parrlo</span><i class="tog on"></i></div><div class="r"><span>Полный доступ</span><i class="tog on"></i></div></div>
+    <div class="bottom"><button class="primary" data-act="openSettings">Открыть Настройки</button><button class="link" data-act="goFA">Зачем полный доступ</button></div></div>${home}`;
+  if (st.view==='fullaccess') return `<div class="app"><div class="wm">Pa<span class="rr">rr</span>lo</div>
+    <h2>Зачем полный доступ</h2><p class="lead">Без него клавиатура печатает, но не переводит.</p>
+    <ul class="why">
+      <li><span class="ic">${ICON.globeNet}</span><span>Перевод делается через интернет. Без полного доступа iOS не даёт клавиатуре выходить в сеть.</span></li>
+      <li><span class="ic">${ICON.swap}</span><span>На перевод уходит текст, когда вы нажимаете «Перевести» или «Перевести скопированное».</span></li>
+      <li><span class="ic">${ICON.info}</span><span>iOS покажет стандартное предупреждение — его видят все, кто включает полный доступ любой клавиатуре.</span></li>
+      <li><span class="ic">${ICON.sliders}</span><span>Выключить можно в любой момент: Настройки → Parrlo → Клавиатуры.</span></li>
+    </ul>
+    <div class="bottom"><button class="primary" data-act="openSettings">Открыть Настройки</button><button class="link" data-act="goEnable">Позже</button></div></div>${home}`;
+  if (st.view==='dictation'){
+    const said = st.dictDone || true;
+    return `<div class="app"><div class="wm" style="text-align:center">Pa<span class="rr">rr</span>lo</div>
+     <div class="dict"><img src="${PARROT}" width="104" height="104" alt="Парло слушает" style="border-radius:50%">
+     <div class="trans"><span class="lab">Что поняли Parrlo</span>${DICT}</div>
+     <button class="bigmic" aria-label="Запись">${ICON.micBig}</button><div style="font-size:16px;color:var(--text2)">Нажмите и говорите</div></div>
+     <div class="backhint"><span class="arr">‹</span><span>Вернитесь стрелкой ‹ вверху слева — текст будет в клавиатуре</span></div></div>${home}`;
+  }
+}
+function render(){
+  const d=DEV[dev];
+  const sc=$('#screen'); sc.style.width=d.w+'px'; sc.style.height=d.h+'px';
+  $('#bezel').className='bezel '+(dev==='ios'?'':dev);
+  let h=statusBar();
+  if (st.view==='chat') h+=chat()+keyboard(); else h+=appScreen();
+  sc.innerHTML=h;
+  fit();
+}
+function fit(){
+  if (document.body.classList.contains('shot')) return;
+  const b=$('#bezel'); const H=window.innerHeight-40; const hh=b.offsetHeight; const s=Math.min(1,H/hh);
+  b.style.transform=`scale(${s})`; b.parentElement.style.height=(hh*s+10)+'px';
+}
+function nav(){
+  let h='';
+  for (const s of S){
+    if (s.sec){ h+=`<h2 class="${s.later?'later':''}">${s.sec}</h2>`; continue; }
+    h+=`<button data-go="${s.id}" class="${cur&&cur.id===s.id?'on':''}">${s.t}<small>${s.d}</small></button>`;
+  }
+  $('#nav').innerHTML=h;
+}
+function notes(){
+  $('#notes').innerHTML=`<h3>${cur.t}</h3>${cur.n}<div class="ctrl"><button data-act="reset">Сбросить экран</button></div>`;
+}
+function go(id){
+  cur=S.find(s=>s.id===id)||S[1]; dev=cur.dev||'ios';
+  st=JSON.parse(JSON.stringify(Object.assign({},BASE,cur.st)));
+  st.lastAlpha = st.layout==='num'?'ru':st.layout;
+  if (!document.body.classList.contains('shot')) history.replaceState(null,'','#'+cur.id);
+  nav(); notes(); render();
+}
+/* ---------------- ввод ---------------- */
+function autoCap(){ const t=st.text; return t==='' || /[.!?]\s$/.test(t) || /\n$/.test(t); }
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-go]'); if (g){ go(g.dataset.go); return; }
+  const k=e.target.closest('[data-k]');
+  if (k){ let ch=k.dataset.k;
+    if (st.panel||st.view!=='chat') return;
+    if (ch.length===1 && /\p{L}/u.test(ch) && (st.shift||autoCap())) ch=ch.toUpperCase();
+    st.text+=ch; st.shift=false; st.clip=false; st.micToast=false; st.src=null; render(); return; }
+  const a=e.target.closest('[data-act]'); if(!a) return;
+  const act=a.dataset.act, v=a.dataset.v;
+  switch(act){
+    case 'shift': st.shift=!st.shift; break;
+    case 'bksp': st.text=[...st.text].slice(0,-1).join(''); st.src=null; break;
+    case 'num': if (st.layout==='num') st.layout=st.lastAlpha; else { st.lastAlpha=st.layout; st.layout='num'; } break;
+    case 'lng': { const o=['ru','es','en']; const c=st.layout==='num'?st.lastAlpha:st.layout; st.layout=o[(o.indexOf(c)+1)%3]; st.lastAlpha=st.layout; } break;
+    case 'target': st.target=v; break;
+    case 'tone': st.tone=v; break;
+    case 'translate': if (!st.text.trim()) { st.text=RU; } if (st.text===LONG) st.src='long'; else if (st.text===RU) st.src='short'; st.panel='preview'; break;
+    case 'edit': st.panel=null; if (st.src==='dict'){ st.text=DICT; } break;
+    case 'insert': { const t=trText(); st.text=t.tx; st.panel=null; st.src=null; } break;
+    case 'send': if (st.text.trim()){ st.sent.push(st.text.trim()); st.text=''; st.panel=null; } break;
+    case 'trClip': st.panel='incoming'; st.clip=false; st.ctx=false; break;
+    case 'noClip': st.clip=false; st.ctx=false; break;
+    case 'closePanel': st.panel=null; break;
+    case 'openSettings': flash('Прототип: здесь откроются Настройки iOS'); return;
+    case 'goFA': go('kb-10-app-full-access'); return;
+    case 'goEnable': go('kb-09-app-enable'); return;
+    case 'mic': if (dev==='android'){ st.listening=true; } else { st.micToast=true; } break;
+    case 'micDone': st.listening=false; st.src='dict'; st.panel='preview'; break;
+    case 'toDict': go('kb-15-later-mic-app'); return;
+    case 'goBack': go('kb-16-later-mic-return'); return;
+    case 'reset': go(cur.id); return;
+  }
+  render();
+});
+function flash(msg){ const n=document.createElement('div'); n.className='proto'; n.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9'; n.textContent=msg; document.body.appendChild(n); setTimeout(()=>n.remove(),1800); }
+window.addEventListener('resize',fit);
+const q=new URLSearchParams(location.search);
+if (q.get('shot')) document.body.classList.add('shot');
+go(q.get('shot') || location.hash.slice(1) || 'kb-01-ru');
+</script>
+</body>
+</html>
