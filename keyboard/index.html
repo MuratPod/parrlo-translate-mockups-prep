@@ -12,6 +12,11 @@
   --bg:#12161C; --surface:#1C2026; --ink:#0E1116; --green:#2BC48A; --brand:#00A86B; --deep:#00875C;
   --beak:#FFC247; --text:#E8ECF1; --text2:#9AA4B2; --card:#242B34; --glass:#2E3237;
   --warn:#FFC247; --warnBg:#3C372B; --info:#6AA6F5; --successBg:#1E3734;
+  /* градиент клавиатуры v2.3: #12161C → смесь с #00875C 6% → 16% */
+  --kbG0:#12161C; --kbG1:#111D20; --kbG2:#0F2826;
+  --kbGrad:linear-gradient(180deg,var(--kbG0) 0%,var(--kbG1) 45%,var(--kbG2) 100%);
+  --kbGlow:radial-gradient(90px 60px at 22px 24px,rgba(43,196,138,.20),rgba(43,196,138,0) 100%);
+  --swipeDur:180ms; --swipeEase:cubic-bezier(.2,.8,.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:#0A0C10;color:var(--text);font-family:Inter,system-ui,sans-serif}
@@ -53,7 +58,7 @@ body.shot .screen{border-radius:0}
 .status{flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 30px 0 34px;font-weight:600;font-size:17px;position:relative}
 .status .island{position:absolute;left:50%;top:11px;width:124px;height:36px;margin-left:-62px;background:#000;border-radius:20px}
 .status .icons{display:flex;gap:6px;align-items:center}
-.status .back{position:absolute;left:18px;top:16px;font-size:14px;font-weight:600;color:var(--info);display:flex;align-items:center;gap:2px;padding:3px 8px;border-radius:10px;box-shadow:0 0 0 2px var(--info)}
+.status .back{position:absolute;left:14px;top:17px;font-size:13px;font-weight:600;color:var(--info);display:flex;align-items:center;gap:2px;padding:3px 6px;border-radius:10px;box-shadow:0 0 0 2px var(--info)}
 .se .status{font-size:12px;padding:0 8px;height:20px}
 .android .status{font-size:14px;padding:0 22px}
 .android .status .cam{position:absolute;left:50%;top:10px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:#000}
@@ -85,7 +90,7 @@ body.shot .caret{animation:none}
 .send{width:36px;height:36px;border-radius:50%;background:#2B5A8A;display:grid;place-items:center;flex:none}
 .send.off{background:#232A33;color:#6B7480}
 /* ---------- keyboard ---------- */
-.kb{flex:none;background:var(--bg);border-top:1px solid #262C35;display:flex;flex-direction:column;position:relative}
+.kb{flex:none;background:var(--kbGlow),var(--kbGrad);border-top:1px solid #262C35;display:flex;flex-direction:column;position:relative}
 .strip{flex:none;display:flex;align-items:center;gap:5px;padding:0 5px}
 .parrot{flex:none;display:block;border-radius:50%}
 .seg{display:flex;background:var(--ink);border:1px solid #2A313B;border-radius:12px;padding:2px;flex:none}
@@ -100,7 +105,7 @@ body.shot .caret{animation:none}
 .iconbtn{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--text2);flex:none}
 .rows{flex:1;display:flex;flex-direction:column;position:relative}
 .row{display:flex;justify-content:center}
-.key{flex:none;background:var(--surface);border-radius:9px;display:grid;place-items:center;font-weight:500;color:var(--text);box-shadow:0 1px 0 #05070A,inset 0 1px 0 rgba(255,255,255,.05);user-select:none;-webkit-user-select:none;position:relative}
+.key{flex:none;background:var(--surface);border-radius:9px;border:1px solid rgba(255,255,255,.09);display:grid;place-items:center;font-weight:500;color:var(--text);box-shadow:0 1px 0 #05070A,inset 0 1px 0 rgba(255,255,255,.05);user-select:none;-webkit-user-select:none;position:relative}
 .key:active,.key.press{background:#2E3540}
 .key.fn{background:#2A3038;color:var(--text);font-size:16px;font-weight:600}
 .key.fn.on{background:var(--text);color:var(--ink)}
@@ -108,14 +113,27 @@ body.shot .caret{animation:none}
 .key.lng{font-size:15px;font-weight:700;color:var(--green)}
 .key.mic.later{box-shadow:0 0 0 2px var(--warn) inset}
 .key .pop{position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:#3A424D;border-radius:10px;padding:4px 12px;font-size:32px}
+/* свайп по пробелу */
+.key.space{overflow:hidden;touch-action:none}
+.sp-lab{display:flex;align-items:center;gap:6px;font-size:15px;font-weight:600;color:#9AA4B2;white-space:nowrap;will-change:transform}
+.sp-lab .cur{color:var(--text)}
+.sp-lab .ar{font-size:18px;color:#9AA4B2;font-weight:500}
+.sp-lab.in-l{animation:spInL var(--swipeDur) var(--swipeEase)}
+.sp-lab.in-r{animation:spInR var(--swipeDur) var(--swipeEase)}
+@keyframes spInL{from{transform:translateX(60%);opacity:.2}to{transform:none;opacity:1}}
+@keyframes spInR{from{transform:translateX(-60%);opacity:.2}to{transform:none;opacity:1}}
+.rm .sp-lab.in-l,.rm .sp-lab.in-r{animation:none}
+.finger{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:rgba(232,236,241,.28);box-shadow:0 0 0 2px rgba(232,236,241,.55);pointer-events:none;z-index:3}
+.trail{position:absolute;height:10px;margin-top:-5px;border-radius:5px;background:linear-gradient(90deg,rgba(43,196,138,0),rgba(43,196,138,.0) 5%,rgba(43,196,138,.75));pointer-events:none;z-index:2}
+.gcap{position:absolute;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--green);border:1px solid #2F3742;font-size:13px;font-weight:700;padding:5px 10px;border-radius:10px;white-space:nowrap;z-index:3}
 /* system row (Face ID iPhones) */
-.sysrow{flex:none;background:var(--bg);display:flex;justify-content:space-between;align-items:flex-start;padding:6px 26px 0;position:relative;color:#6B7480}
-.sysrow .hint{position:absolute;left:50%;top:10px;transform:translateX(-50%);font-size:10px;color:#4D5562;letter-spacing:.04em;text-transform:uppercase}
+.sysrow{flex:none;background:var(--kbG2);display:flex;justify-content:space-between;align-items:flex-start;padding:6px 26px 0;position:relative;color:#6B7480}
+.sysrow .hint{position:absolute;left:50%;top:10px;transform:translateX(-50%);font-size:10px;color:#8A93A0;letter-spacing:.04em;text-transform:uppercase}
 .homeind{position:absolute;left:50%;bottom:8px;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:#E8ECF1}
-.navbar{flex:none;background:var(--bg);position:relative}
+.navbar{flex:none;background:var(--kbG2);position:relative}
 .navbar .homeind{width:108px;height:4px;margin-left:-54px;bottom:10px;background:#9AA4B2}
 /* panels that replace rows */
-.panel{position:absolute;inset:0;display:flex;flex-direction:column;padding:8px 10px 12px;gap:8px;background:var(--bg)}
+.panel{position:absolute;inset:0;display:flex;flex-direction:column;padding:8px 10px 12px;gap:8px;background:transparent}
 .hintb{position:relative;align-self:flex-start;background:var(--successBg);color:var(--green);font-size:14px;font-weight:600;line-height:1.3;padding:7px 11px;border-radius:12px;max-width:100%}
 .hintb:before{content:"";position:absolute;left:14px;top:-6px;border:6px solid transparent;border-top:0;border-bottom-color:var(--successBg)}
 .tcard{flex:1;min-height:0;background:var(--card);border-radius:16px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;border:1px solid #2F3742}
@@ -244,6 +262,9 @@ const S = [
  {id:'kb-03-en',t:'2b. Раскладка EN',d:'QWERTY',
   st:{layout:'en',text:'See you tomorrow',shift:false},
   n:'<p>Английская раскладка. Ряд 2 — 9 клавиш, по центру, ширина клавиш как в ES.</p>'},
+ {id:'kb-03s-space-swipe',t:'2c. Свайп по пробелу',d:'жест в процессе: RU → ES',
+  st:{text:'Привет! Давай завтра в семь у ка',swipeDemo:{dx:-38}},
+  n:'<p>Как в Яндекс Клавиатуре: на пробеле подсказка <b>«‹ RU · ES ›»</b>, текущий язык ярче. Свайп влево — следующий язык, вправо — предыдущий (RU → ES → EN по кругу).</p><p>Срабатывает при сдвиге ≥ 40 pt и угле ≤ 30° от горизонтали; короткий тап — пробел. Подпись едет за пальцем, после смены въезжает новая (180 мс).</p><p>Палец и след — иллюстрация жеста. Клавиша RU/ES/EN рядом остаётся.</p><p>Попробуйте: перетащите мышью по пробелу.</p>'},
  {id:'kb-04-preview',t:'3. Предпросмотр перевода',d:'«Вставить» / «Изменить»',
   st:{text:RU,panel:'preview',src:'short'},
   n:'<p>Предпросмотр <b>заменяет ряды клавиш</b> — выше окна клавиатуры ничего не рисуется, высота та же 320 pt.</p><p>Парло подсказывает контекст одной фразой. Язык и тон можно поменять прямо здесь — перевод обновится.</p><p>«Вставить» заменяет текст в поле на перевод. «Изменить» возвращает клавиши, исходный текст остаётся.</p>'},
@@ -307,6 +328,7 @@ function chat(){
   h += `<div class="b out">¡Muy bien, gracias! Ya estoy en Valencia.<span class="t">18:04</span></div>`;
   h += `<div class="b in ${st.ctx?'sel':''}">${INCOMING}<span class="t">18:10</span></div>`;
   if (st.ctx) h += `<div class="toast">Сообщение скопировано</div>`;
+  if (st.swipeDemo) h += `<div class="gcap" style="position:static;transform:none;align-self:center;border-style:dashed;margin-top:6px">Жест: свайп по пробелу влево · RU → ES · порог 40 pt</div>`;
   for (const m of st.sent) h += `<div class="b out">${esc(m)}<span class="t">18:12</span></div>`;
   h += `</div>`;
   const has = st.text.length>0;
@@ -338,9 +360,18 @@ function rows(){
   let used = (dev==='android'?50:48) + (showGlobe?42:0) + 46 + (showMic?44:0) + 70;
   const nk = fixed.length + 2;
   const sp = d.w-2*d.padX-(nk-1)*d.gapX-used;
-  h+=row(fixed.join('').replace('W123',dev==='android'?50:48) + `<button class="key space" data-k=" " style="width:${sp}px;height:${d.keyH}px">${SPACE[st.layout]}</button><button class="key fn" data-k="\n" style="width:70px;height:${d.keyH}px">${ICON.ret}</button>`);
+  h+=row(fixed.join('').replace('W123',dev==='android'?50:48) + `<button class="key space" data-k=" " data-space="1" style="width:${sp}px;height:${d.keyH}px">${spaceLabel()}</button><button class="key fn" data-k="\n" style="width:70px;height:${d.keyH}px">${ICON.ret}</button>`);
   h+=`</div>`;
   return h;
+}
+const ORDER=['ru','es','en'];
+function spaceLabel(){
+  if (st.layout==='num') return SPACE.num;
+  const i=ORDER.indexOf(st.layout), nx=ORDER[(i+1)%3];
+  const sw=st.swipeDemo, anim=st.anim?(' in-'+st.anim):'';
+  const style = sw ? ` style="transform:translateX(${sw.dx*0.5}px)"` : '';
+  const nxStyle = sw ? ` style="color:#D5DCE4"` : '';
+  return `<span class="sp-lab${anim}"${style}><span class="ar">‹</span><span class="cur">${LNAME[st.layout]}</span><span>·</span><span${nxStyle}>${LNAME[nx]}</span><span class="ar">›</span></span>`;
 }
 function trText(){
   if (!st.src) return {tx:TR.short[st.target][st.tone], orig:st.text};
@@ -392,7 +423,7 @@ function keyboard(){
   const d=DEV[dev];
   let h=`<div class="kb" style="height:${d.kb}px">${strip()}${rows()}`;
   if (st.panel) h=h.replace(/<\/div>$/,'') ;
-  h = `<div class="kb" style="height:${d.kb}px">${strip()}<div style="position:relative;flex:1;display:flex;flex-direction:column">${rows()}${panel()}</div></div>`;
+  h = `<div class="kb" style="height:${d.kb}px">${strip()}<div style="position:relative;flex:1;display:flex;flex-direction:column">${st.panel?rows().replace('class="rows"','class="rows" style="visibility:hidden"').replace('style="visibility:hidden" style="','style="visibility:hidden;'):rows()}${panel()}</div></div>`;
   if (dev==='ios') h+=`<div class="sysrow" style="height:${d.sys}px"><span>${ICON.globe}</span><span class="hint">системный ряд iOS</span><span>${ICON.mic}</span><i class="homeind"></i></div>`;
   if (dev==='android') h+=`<div class="navbar" style="height:${d.sys}px"><i class="homeind"></i></div>`;
   return h;
@@ -429,7 +460,18 @@ function render(){
   let h=statusBar();
   if (st.view==='chat') h+=chat()+keyboard(); else h+=appScreen();
   sc.innerHTML=h;
+  st.anim=null;
+  if (st.swipeDemo) drawSwipeDemo();
   fit();
+}
+function drawSwipeDemo(){
+  const sc=$('#screen'), sp=sc.querySelector('[data-space]'); if(!sp) return;
+  const a=sc.getBoundingClientRect(), r=sp.getBoundingClientRect(), dx=st.swipeDemo.dx;
+  const z=a.width/sc.offsetWidth; const X=(v)=>(v-a.left)/z, Y=(v)=>(v-a.top)/z;
+  const y=Y(r.bottom-4), x0=X(r.left+r.width*0.97), x1=x0+dx;
+  const tr=document.createElement('i'); tr.className='trail'; tr.style.cssText=`left:${x1}px;top:${y}px;width:${x0-x1}px;transform:scaleX(-1)`;
+  const f=document.createElement('i'); f.className='finger'; f.style.cssText=`left:${x1}px;top:${y}px`;
+  sc.append(tr,f);
 }
 function fit(){
   if (document.body.classList.contains('shot')) return;
@@ -445,7 +487,7 @@ function nav(){
   $('#nav').innerHTML=h;
 }
 function notes(){
-  $('#notes').innerHTML=`<h3>${cur.t}</h3>${cur.n}<div class="ctrl"><button data-act="reset">Сбросить экран</button></div>`;
+  $('#notes').innerHTML=`<h3>${cur.t}</h3>${cur.n}<div class="ctrl"><button data-act="reset">Сбросить экран</button><button data-act="rm">Reduce Motion: ${document.body.classList.contains('rm')?'вкл':'выкл'}</button></div><p style="margin-top:10px">Смена языка: свайп по пробелу влево / вправо (мышью — перетащите) или клавиша RU/ES/EN.</p>`;
 }
 function go(id){
   cur=S.find(s=>s.id===id)||S[1]; dev=cur.dev||'ios';
@@ -469,7 +511,8 @@ document.addEventListener('click',e=>{
     case 'shift': st.shift=!st.shift; break;
     case 'bksp': st.text=[...st.text].slice(0,-1).join(''); st.src=null; break;
     case 'num': if (st.layout==='num') st.layout=st.lastAlpha; else { st.lastAlpha=st.layout; st.layout='num'; } break;
-    case 'lng': { const o=['ru','es','en']; const c=st.layout==='num'?st.lastAlpha:st.layout; st.layout=o[(o.indexOf(c)+1)%3]; st.lastAlpha=st.layout; } break;
+    case 'lng': { const c=st.layout==='num'?st.lastAlpha:st.layout; st.layout=ORDER[(ORDER.indexOf(c)+1)%3]; st.lastAlpha=st.layout; st.anim='l'; } break;
+    case 'rm': document.body.classList.toggle('rm'); notes(); return;
     case 'target': st.target=v; break;
     case 'tone': st.tone=v; break;
     case 'translate': if (!st.text.trim()) { st.text=RU; } if (st.text===LONG) st.src='long'; else if (st.text===RU) st.src='short'; st.panel='preview'; break;
@@ -490,6 +533,27 @@ document.addEventListener('click',e=>{
   }
   render();
 });
+/* свайп по пробелу: ≥40 pt по горизонтали, угол ≤30°; короткий тап — пробел */
+let sw=null, swallowClick=false;
+document.addEventListener('pointerdown',e=>{
+  const sp=e.target.closest('[data-space]'); if(!sp||st.layout==='num'||st.panel) return;
+  const z=sp.getBoundingClientRect().width/sp.offsetWidth;
+  sw={x:e.clientX,y:e.clientY,z,el:sp,lab:sp.querySelector('.sp-lab'),done:false}; sp.setPointerCapture(e.pointerId);
+});
+document.addEventListener('pointermove',e=>{
+  if(!sw||sw.done) return;
+  const dx=(e.clientX-sw.x)/sw.z, dy=(e.clientY-sw.y)/sw.z;
+  if (sw.lab && !document.body.classList.contains('rm')) sw.lab.style.transform=`translateX(${Math.max(-40,Math.min(40,dx*0.5))}px)`;
+  const ang=Math.abs(Math.atan2(dy,dx)*180/Math.PI), horiz=Math.min(ang,180-ang)<=30;
+  if (Math.abs(dx)>=40 && horiz){
+    sw.done=true; swallowClick=true;
+    const i=ORDER.indexOf(st.layout);
+    st.layout = dx<0 ? ORDER[(i+1)%3] : ORDER[(i+2)%3]; st.lastAlpha=st.layout; st.anim = dx<0?'l':'r';
+    render(); /* здесь в iOS: UIImpactFeedbackGenerator(style:.light).impactOccurred() — нужен полный доступ */
+  }
+});
+document.addEventListener('pointerup',()=>{ if(sw){ if(!sw.done && sw.lab) sw.lab.style.transform=''; const moved=sw.done; sw=null; if(moved) setTimeout(()=>swallowClick=false,0);} });
+document.addEventListener('click',e=>{ if(swallowClick && e.target.closest('[data-space]')){ e.stopImmediatePropagation(); swallowClick=false; } },true);
 function flash(msg){ const n=document.createElement('div'); n.className='proto'; n.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9'; n.textContent=msg; document.body.appendChild(n); setTimeout(()=>n.remove(),1800); }
 window.addEventListener('resize',fit);
 const q=new URLSearchParams(location.search);
